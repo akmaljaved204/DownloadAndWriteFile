@@ -71,7 +71,7 @@ public class Imagezoom extends CordovaPlugin {
 					myCallback.success("true");
 				} catch (Exception e) {
 					System.out.println("Exception = "+e);
-					myCallback.error(e.getMessage());
+					myCallback.error("Exception = "+e.getMessage());
 				}
 				
 			}
