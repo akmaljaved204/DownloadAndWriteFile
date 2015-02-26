@@ -68,7 +68,7 @@ public class Imagezoom extends CordovaPlugin {
 					output.flush();
 					output.close();
 					input.close();
-					myCallback.success("true");
+					myCallback.success(file.getAbsolutePath());
 				} catch (Exception e) {
 					System.out.println("Exception = "+e);
 					myCallback.error("Exception = "+e.getMessage());
