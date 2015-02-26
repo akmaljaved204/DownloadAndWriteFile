@@ -33,7 +33,7 @@ public class Imagezoom extends CordovaPlugin {
 				String fileUrl= arg_object.getString("fileUrl");
 				String fileName= arg_object.getString("fileName");
 			   myCallback=callbackContext;
-			   download(fileUrl,fileName)
+			   download(fileUrl,fileName);
                return true;
             }
             callbackContext.error("Invalid action");
