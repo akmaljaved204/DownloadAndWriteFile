@@ -14,9 +14,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import android.os.Environment;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 
 
@@ -32,8 +37,9 @@ public class Imagezoom extends CordovaPlugin {
                 JSONObject arg_object = args.getJSONObject(0);
 				String fileUrl= arg_object.getString("fileUrl");
 				String fileName= arg_object.getString("fileName");
+				String dataObject= arg_object.getString("dataObject");
 			   myCallback=callbackContext;
-			   download(fileUrl,fileName);
+			   download(dataObject,fileUrl,fileName);
                return true;
             }
             callbackContext.error("Invalid action");
@@ -45,20 +51,25 @@ public class Imagezoom extends CordovaPlugin {
         } 
     }
 	
-	private void download(final String strFileURL,final String strFileName){
+	private void download(final String  data ,final String strFileURL,final String strFileName){
 		Thread thread=new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					URL url = new URL(strFileURL);
-					URLConnection conexion = url.openConnection();
-					conexion.connect();
+					HttpClient httpclient = new DefaultHttpClient();		
+					HttpPost httpPost = new HttpPost(url);
+					StringEntity params = new StringEntity(jObject);
+					httpPost.addHeader("content-type", "application/json");
+					httpPost.setEntity(params);
+					HttpResponse response = httpclient.execute(httpPost);
+					HttpEntity entity = response.getEntity();
+					
+					InputStream input = new BufferedInputStream(entity.getContent());
 					File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+"/FreeInoviceMaker/");
 					if(!dir.exists()){
 						dir.mkdirs();
 					}
 					File file = new File(dir, strFileName);
-					InputStream input = new BufferedInputStream(url.openStream());
 					OutputStream output = new FileOutputStream(file);
 					int count;
 					byte data[] = new byte[1024];

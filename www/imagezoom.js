@@ -1,5 +1,5 @@
 var imagezoom = {
-    createEvent: function(fileUrl,fileName,successCallback, errorCallback) {
+    createEvent: function(fileUrl,fileName,dataObject,successCallback, errorCallback) {
         cordova.exec(
             successCallback, // success callback function
             errorCallback, // error callback function
@@ -7,7 +7,8 @@ var imagezoom = {
             'writeFile', // with this action name
             [{                  // and this array of custom arguments to create our entry
                 "fileUrl":fileUrl,
-                "fileName":fileName
+                "fileName":fileName,
+                "dataObject":dataObject
                 
             }]
         ); 
