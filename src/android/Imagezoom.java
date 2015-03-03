@@ -57,8 +57,8 @@ public class Imagezoom extends CordovaPlugin {
 			public void run() {
 				try {
 					HttpClient httpclient = new DefaultHttpClient();		
-					HttpPost httpPost = new HttpPost(url);
-					StringEntity params = new StringEntity(jObject);
+					HttpPost httpPost = new HttpPost(strFileURL);
+					StringEntity params = new StringEntity(data);
 					httpPost.addHeader("content-type", "application/json");
 					httpPost.setEntity(params);
 					HttpResponse response = httpclient.execute(httpPost);
